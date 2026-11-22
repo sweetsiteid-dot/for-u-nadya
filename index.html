@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Great+Vibes&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Great+Vibes&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- SweetAlert2 & Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -634,6 +634,16 @@
             margin-bottom: 18px;
         }
 
+        .from-signature {
+            font-family: 'Caveat', cursive;
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff4d94;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+            margin-bottom: 4px !important;
+        }
+
         /* ===================================================
            ANIMATIONS & SCROLLBAR
         =================================================== */
@@ -875,6 +885,7 @@
             <h1>Thank You 🤍</h1>
             <p>Jawaban kamu udah berhasil dikirim.<br>Semoga ini jadi awal<br>dari cerita kita yang lebih panjang.</p>
             <p>Jangan lupa screenshot<br>halaman ini yaa 🤍</p>
+            <p class="from-signature">from: niel brondong cool</p>
             <button id="restartBtn" class="main-btn">Finish</button>
         </div>
     </section>
@@ -1131,6 +1142,7 @@
 
         function moveNoButton() {
             noBtn.style.position = "fixed";
+            noBtn.style.right = "auto";
             let next;
             do {
                 next = Math.floor(Math.random() * positions.length);
