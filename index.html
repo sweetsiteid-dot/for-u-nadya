@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For Nadya 🤍</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Great+Vibes&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- SweetAlert2 & Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ===================================================
+           RESET & BASE
+        =================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #ffd9ec, #ffe8f3, #fff4fa);
+            overflow-x: hidden;
+            color: #444;
+        }
+
+        /* ===================================================
+           SCREEN TRANSITIONS
+        =================================================== */
+        .screen {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.9s ease, visibility 0.9s ease;
+            padding: 24px;
+            z-index: 2;
+        }
+
+        .screen.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ===================================================
+           FLOATING HEARTS
+        =================================================== */
+        .floating-hearts {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .floating-hearts span {
+            position: absolute;
+            bottom: -40px;
+            color: #ff78b2;
+            font-size: 18px;
+            animation: floatHeart linear infinite;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 0;
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* ===================================================
+           1. COVER PAGE
+        =================================================== */
+        #cover {
+            background: linear-gradient(180deg, #ffd6ea, #ffe8f6, #fff8fc);
+            z-index: 5;
+        }
+
+        .cover-content {
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            animation: fadeUp 1.3s ease;
+        }
+
+        .typing {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 40px;
+            font-weight: 600;
+            font-style: italic;
+            color: #b55a8d;
+            line-height: 1.45;
+            letter-spacing: 0.8px;
+            text-align: center;
+            white-space: pre-line;
+            overflow: hidden;
+            min-height: 115px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover-name {
+            margin-top: 20px;
+            font-size: 64px;
+            font-family: 'Great Vibes', cursive;
+            color: #ff4d94;
+            text-shadow: 0 8px 25px rgba(255, 79, 157, 0.25);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 0.8s ease;
+        }
+
+        .cover-name.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===================================================
+           MAIN BUTTON
+        =================================================== */
+        .main-btn {
+            margin-top: 36px;
+            border: none;
+            outline: none;
+            padding: 15px 55px;
+            border-radius: 999px;
+            background: #ff5ea8;
+            color: #fff;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.35s;
+            box-shadow: 0 10px 25px rgba(255, 94, 168, 0.35);
+        }
+
+        .main-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 94, 168, 0.45);
+        }
+
+        .main-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* ===================================================
+           2. PIN PAGE
+        =================================================== */
+        #pinPage {
+            background: linear-gradient(180deg, #ffd6ea, #fff2f8);
+            z-index: 4;
+        }
+
+        .pin-box {
+            width: 100%;
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(18px);
+            border-radius: 28px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.15);
+        }
+
+        .pin-box h2 {
+            color: #ff4d94;
+            font-size: 24px;
+            margin-bottom: 28px;
+        }
+
+        .pin-dots {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+
+        .pin-dots span {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid #ff6aa9;
+            background: transparent;
+            transition: 0.3s;
+        }
+
+        .pin-dots span.active {
+            background: #ff5ea8;
+            transform: scale(1.15);
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .keypad button {
+            height: 68px;
+            border: none;
+            border-radius: 20px;
+            background: #fff;
+            color: #ff4d94;
+            font-size: 22px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .keypad button:hover {
+            transform: scale(1.06);
+            background: #ffe2f0;
+        }
+
+        .keypad button:active {
+            transform: scale(0.92);
+        }
+
+        #clear {
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .shake {
+            animation: shake 0.45s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+        }
+
+        /* ===================================================
+           3. BIG MEMORIES (PHOTO CAROUSEL PAGE)
+        =================================================== */
+        #memoriesPage {
+            background: linear-gradient(180deg, #ffd6ea, #ffe8f6, #fff8fc);
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-y: auto;
+            padding: 36px 20px 50px;
+            z-index: 3;
+        }
+
+        .memories-header {
+            text-align: center;
+            margin-bottom: 22px;
+            animation: fadeUp 0.9s ease;
+        }
+
+        .memories-eyebrow {
+            font-size: 12px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #d97aa6;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .memories-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 34px;
+            font-weight: 600;
+            color: #c84b84;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .memories-title .heart-outline {
+            font-weight: 400;
+            color: #c84b84;
+        }
+
+        .memories-subtitle {
+            font-size: 13.5px;
+            color: #7c6b74;
+            margin-top: 6px;
+        }
+
+        .memories-card {
+            width: 100%;
+            max-width: 390px;
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 18px 18px 26px;
+            box-shadow: 0 20px 45px rgba(255, 105, 180, 0.16);
+            text-align: center;
+            animation: fadeUp 1s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .slider-viewport {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            border-radius: 22px;
+            overflow: hidden;
+            position: relative;
+            background: #ffeaf4;
+            touch-action: pan-y;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .slider-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .slide-item {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 18px;
+            margin-bottom: 14px;
+        }
+
+        .slider-dots span {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #f2bdd5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dots span.active {
+            width: 12px;
+            height: 12px;
+            background: #d9538f;
+        }
+
+        .slider-caption {
+            font-size: 13px;
+            color: #6b6367;
+            line-height: 1.5;
+            min-height: 20px;
+            transition: opacity 0.25s ease;
+        }
+
+        #memoriesPage .main-btn {
+            margin-top: 26px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===================================================
+           4. CONFESSION LETTER PAGE (UCAPAN NEMBAK)
+        =================================================== */
+        #letterPage {
+            align-items: flex-start;
+            justify-content: flex-start;
+            overflow-y: auto;
+            padding: 50px 20px 50px;
+            z-index: 3;
+        }
+
+        .letter-card {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 45px rgba(255, 105, 180, 0.15);
+            position: relative;
+            z-index: 2;
+        }
+
+        .letter-card h2 {
+            color: #ff4d94;
+            font-size: 40px;
+            font-family: 'Great Vibes', cursive;
+            margin-bottom: 28px;
+            line-height: 1.3;
+        }
+
+        .letter-text {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .letter-text p {
+            opacity: 0;
+            transform: translateY(22px);
+            font-size: 16.5px;
+            line-height: 1.85;
+            color: #4a4a4a;
+        }
+
+        #letterPage.active .letter-text p {
+            animation: showText 0.8s forwards;
+        }
+
+        #letterPage.active .letter-text p:nth-child(1) { animation-delay: 0.4s; }
+        #letterPage.active .letter-text p:nth-child(2) { animation-delay: 1.1s; }
+        #letterPage.active .letter-text p:nth-child(3) { animation-delay: 1.8s; }
+        #letterPage.active .letter-text p:nth-child(4) { animation-delay: 2.5s; }
+        #letterPage.active .letter-text p:nth-child(5) { animation-delay: 3.2s; }
+        #letterPage.active .letter-text p:nth-child(6) { animation-delay: 3.9s; }
+        #letterPage.active .letter-text p:nth-child(7) { animation-delay: 4.6s; }
+
+        .last-text {
+            text-align: center;
+            font-size: 21px !important;
+            font-weight: 600;
+            color: #ff4d94 !important;
+            margin-top: 12px;
+        }
+
+        @keyframes showText {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===================================================
+           5. QUESTION PAGE
+        =================================================== */
+        #questionPage {
+            background: linear-gradient(180deg, #ffd6ea, #fff6fb);
+            z-index: 3;
+        }
+
+        .question-box {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            animation: fadeUp 0.8s;
+        }
+
+        .question-box h2 {
+            font-size: 42px;
+            color: #ff4d94;
+            font-family: 'Great Vibes', cursive;
+            margin-bottom: 50px;
+            line-height: 1.5;
+        }
+
+        .btn-group {
+            position: relative;
+            width: 320px;
+            height: 180px;
+            margin: 0 auto;
+        }
+
+        .yes-btn,
+        .no-btn {
+            position: absolute;
+            border: none;
+            border-radius: 999px;
+            padding: 16px 45px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .yes-btn {
+            left: 25px;
+            top: 90px;
+            background: #ff5ea8;
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(255, 94, 168, 0.35);
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .no-btn {
+            left: 180px;
+            top: 90px;
+            background: white;
+            color: #ff5ea8;
+            border: 2px solid #ff5ea8;
+            transition: 0.35s ease;
+            z-index: 999;
+        }
+
+        .no-btn:hover {
+            background: #fff3f8;
+        }
+
+        /* ===================================================
+           6. SUCCESS PAGE
+        =================================================== */
+        #successPage {
+            background: linear-gradient(180deg, #ffd9ec, #fff5fb);
+        }
+
+        .success-card {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            background: white;
+            padding: 45px;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.18);
+            animation: fadeUp 0.8s;
+        }
+
+        .success-card h1 {
+            font-size: 55px;
+            color: #ff4d94;
+            font-family: 'Great Vibes', cursive;
+            margin-bottom: 20px;
+        }
+
+        .success-card p {
+            font-size: 18px;
+            line-height: 1.9;
+            margin-bottom: 18px;
+        }
+
+        /* ===================================================
+           7. DATE FORM PAGE
+        =================================================== */
+        #datePage {
+            background: linear-gradient(180deg, #ffe0ef, #fff8fc);
+        }
+
+        .form-card {
+            width: 100%;
+            max-width: 650px;
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.15);
+            animation: fadeUp 0.8s;
+        }
+
+        .form-card h2 {
+            color: #ff4d94;
+            font-size: 36px;
+            margin-bottom: 20px;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .form-card p {
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            resize: none;
+            border: none;
+            outline: none;
+            padding: 20px;
+            font-size: 16px;
+            border-radius: 18px;
+            background: #fff4f9;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* ===================================================
+           8. FINISH PAGE
+        =================================================== */
+        #finishPage {
+            background: linear-gradient(180deg, #ffd8ec, #fff8fc);
+        }
+
+        .finish-card {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            background: white;
+            padding: 45px;
+            border-radius: 30px;
+            box-shadow: 0 15px 45px rgba(255, 105, 180, 0.15);
+            animation: fadeUp 0.8s;
+        }
+
+        .finish-card h1 {
+            color: #ff4d94;
+            font-size: 55px;
+            font-family: 'Great Vibes', cursive;
+            margin-bottom: 20px;
+        }
+
+        .finish-card p {
+            line-height: 1.9;
+            margin-bottom: 18px;
+        }
+
+        /* ===================================================
+           ANIMATIONS & SCROLLBAR
+        =================================================== */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bounce {
+            animation: bounce 0.45s;
+        }
+
+        @keyframes bounce {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.15); }
+            70% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ff8dc2;
+            border-radius: 30px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #ffe8f5;
+        }
+
+        /* ===================================================
+           RESPONSIVE
+        =================================================== */
+        @media (max-width: 768px) {
+            .cover-name { font-size: 54px; }
+            .typing { font-size: 34px; }
+            .letter-card { padding: 28px; }
+            .letter-card h2 { font-size: 34px; }
+            .question-box h2 { font-size: 34px; }
+            .success-card, .form-card, .finish-card { padding: 30px 24px; }
+            .success-card h1, .finish-card h1 { font-size: 44px; }
+        }
+
+        @media (max-width: 480px) {
+            .main-btn { width: 100%; max-width: 390px; }
+            .yes-btn, .no-btn { padding: 15px 35px; font-size: 16px; }
+            .yes-btn { left: 10%; }
+            .no-btn { left: auto; right: 10%; }
+            .pin-box { padding: 25px 18px; }
+            .keypad button { height: 60px; font-size: 20px; }
+            textarea { height: 150px; }
+            .memories-title { font-size: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MUSIC -->
+    <audio id="bgMusic" loop>
+        <source src="assets/music/shapeofmyheart.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- FLOATING HEARTS -->
+    <div class="floating-hearts"></div>
+
+    <!-- ===================================== -->
+    <!-- 1. COVER PAGE                         -->
+    <!-- ===================================== -->
+    <section id="cover" class="screen active">
+        <div class="cover-content">
+            <h3 class="typing"></h3>
+            <h1 class="cover-name">"Nadya"</h1>
+            <button id="playBtn" class="main-btn">Open</button>
+        </div>
+    </section>
+
+    <!-- ===================================== -->
+    <!-- 2. PIN PAGE                           -->
+    <!-- ===================================== -->
+    <section id="pinPage" class="screen">
+        <div class="pin-box">
+            <h2>Enter Secret PIN</h2>
+            <div id="pinDots" class="pin-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="keypad">
+                <button class="num">1</button>
+                <button class="num">2</button>
+                <button class="num">3</button>
+                <button class="num">4</button>
+                <button class="num">5</button>
+                <button class="num">6</button>
+                <button class="num">7</button>
+                <button class="num">8</button>
+                <button class="num">9</button>
+                <button id="clear">CLEAR</button>
+                <button class="num">0</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================== -->
+    <!-- 3. BIG MEMORIES (PHOTO SLIDER)        -->
+    <!-- ===================================== -->
+    <section id="memoriesPage" class="screen">
+        <div class="memories-header">
+            <div class="memories-eyebrow">Little Moments</div>
+            <h2 class="memories-title">Big Memories <span class="heart-outline">♡</span></h2>
+            <p class="memories-subtitle">Some moments are too precious to be forgotten.</p>
+        </div>
+
+        <div class="memories-card">
+            <div class="slider-viewport" id="sliderViewport">
+                <div class="slider-track" id="sliderTrack">
+                    <div class="slide-item">
+                        <img src="assets/img/foto1.jpg" alt="Memory 1">
+                    </div>
+                    <div class="slide-item">
+                        <img src="assets/img/foto2.jpg" alt="Memory 2">
+                    </div>
+                    <div class="slide-item">
+                        <img src="assets/img/foto3.jpg" alt="Memory 3">
+                    </div>
+                    <div class="slide-item">
+                        <img src="assets/img/foto4.jpg" alt="Memory 4">
+                    </div>
+                    <div class="slide-item">
+                        <img src="assets/img/foto5.jpg" alt="Memory 5">
+                    </div>
+                </div>
+            </div>
+
+            <div class="slider-dots" id="sliderDots">
+                <span class="active" data-index="0"></span>
+                <span data-index="1"></span>
+                <span data-index="2"></span>
+                <span data-index="3"></span>
+                <span data-index="4"></span>
+            </div>
+
+            <p class="slider-caption" id="sliderCaption">
+                Every picture holds a little piece of happiness.
+            </p>
+        </div>
+
+        <button id="toLetterBtn" class="main-btn">Next →</button>
+    </section>
+
+    <!-- ===================================== -->
+    <!-- 4. CONFESSION LETTER (UCAPAN NEMBAK)  -->
+    <!-- ===================================== -->
+    <section id="letterPage" class="screen">
+        <div class="letter-card">
+            <h2>Hei, kamu masih kenal aku, kan?</h2>
+            <div class="letter-text">
+                <p>
+                    Iya, aku Niel.
+                    Maaf kalau tiba-tiba begini. Ada sesuatu yang udah lama pengen aku sampein, cuma baru sekarang aku berani ngomong.
+                </p>
+                <p>
+                    Jujur, aku udah nyoba buat nganggep perasaan ini biasa aja.
+                    Aku pikir bakal hilang sendiri, tapi ternyata enggak.
+                    Makin lama aku malah makin nyaman sama kamu, makin sering kepikiran kamu.
+                </p>
+                <p>
+                    Makanya hari ini aku cuma pengen jujur.
+                    Aku suka sama kamu, Nadya.
+                </p>
+                <p>
+                    Aku nggak minta kamu buat langsung jawab atau ngebales perasaan aku sekarang.
+                    Aku cuma nggak mau nyesel karena terus nyimpen ini sendirian.
+                </p>
+                <p>
+                    Kalau suatu saat kamu mau ngasih aku kesempatan,
+                    aku pengen jadi orang yang nemenin kamu.
+                    Bukan cuma sebagai teman, tapi sebagai seseorang yang bisa ada buat kamu.
+                </p>
+                <p>
+                    Jadi...
+                </p>
+                <p class="last-text">
+                    Kamu mau nggak coba jalan sama aku? 🤍
+                </p>
+            </div>
+            <button id="nextBtn" class="main-btn">Next →</button>
+        </div>
+    </section>
+
+    <!-- ===================================== -->
+    <!-- 5. QUESTION PAGE                      -->
+    <!-- ===================================== -->
+    <section id="questionPage" class="screen">
+        <div class="question-box">
+            <h2>Will You Be<br>My Girlfriend?<br>🤍</h2>
+            <div class="btn-group">
+                <button id="yesBtn" class="yes-btn">YES</button>
+                <button id="noBtn" class="no-btn">NO</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================== -->
+    <!-- 6. SUCCESS PAGE                       -->
+    <!-- ===================================== -->
+    <section id="successPage" class="screen">
+        <div class="success-card">
+            <h1>Yeeaayy!!<br>🤍🤍🤍</h1>
+            <p>You just made me<br>the happiest person alive.</p>
+            <p>Thank you for choosing me.<br>I promise I'll always try<br>to make you smile.</p>
+            <div id="confettiOrigin"></div>
+            <button id="continueBtn" class="main-btn">Continue</button>
+        </div>
+    </section>
+
+    <!-- ===================================== -->
+    <!-- 7. DATE FORM PAGE                     -->
+    <!-- ===================================== -->
+    <section id="datePage" class="screen">
+        <div class="form-card">
+            <h2>Tulis Surat Untuk Niel 💌</h2>
+            <p>
+                Ada kata-kata yang mungkin belum sempat kamu sampaikan?
+                Tulis di sini, biarkan setiap kata menjadi pesan kecil yang bisa Niel baca dan simpan. 🤍
+            </p>
+            <textarea id="dateInput" placeholder="Tulis jawaban kamu di sini..."></textarea>
+            <button id="submitBtn" class="main-btn">Kirim 🤍</button>
+        </div>
+    </section>
+
+    <!-- ===================================== -->
+    <!-- 8. FINISH PAGE                        -->
+    <!-- ===================================== -->
+    <section id="finishPage" class="screen">
+        <div class="finish-card">
+            <h1>Thank You 🤍</h1>
+            <p>Jawaban kamu udah berhasil dikirim.<br>Semoga ini jadi awal<br>dari cerita kita yang lebih panjang.</p>
+            <p>Jangan lupa screenshot<br>halaman ini yaa 🤍</p>
+            <button id="restartBtn" class="main-btn">Finish</button>
+        </div>
+    </section>
+
+    <!-- ===================================== -->
+    <!-- SCRIPT                                -->
+    <!-- ===================================== -->
+    <script>
+        /* ===================================================
+           ELEMENTS
+        =================================================== */
+        const screens = document.querySelectorAll(".screen");
+        const cover = document.getElementById("cover");
+        const pinPage = document.getElementById("pinPage");
+        const memoriesPage = document.getElementById("memoriesPage");
+        const letterPage = document.getElementById("letterPage");
+        const questionPage = document.getElementById("questionPage");
+        const successPage = document.getElementById("successPage");
+        const datePage = document.getElementById("datePage");
+        const finishPage = document.getElementById("finishPage");
+
+        const playBtn = document.getElementById("playBtn");
+        const music = document.getElementById("bgMusic");
+        const dots = document.querySelectorAll("#pinDots span");
+        const numbers = document.querySelectorAll(".num");
+        const clearBtn = document.getElementById("clear");
+        const toLetterBtn = document.getElementById("toLetterBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const yesBtn = document.getElementById("yesBtn");
+        const noBtn = document.getElementById("noBtn");
+        const continueBtn = document.getElementById("continueBtn");
+        const submitBtn = document.getElementById("submitBtn");
+        const restartBtn = document.getElementById("restartBtn");
+        const textarea = document.getElementById("dateInput");
+
+        let pin = "";
+        const correctPin = "0708";
+
+        /* ===================================================
+           TYPEWRITER
+        =================================================== */
+        const typing = document.querySelector(".typing");
+        const coverName = document.querySelector(".cover-name");
+        const text = `I made this website\njust for u`;
+        let index = 0;
+
+        typing.textContent = "";
+
+        function typeWriter() {
+            if (index < text.length) {
+                typing.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 80);
+            } else {
+                setTimeout(() => {
+                    coverName.classList.add("show");
+                }, 400);
+            }
+        }
+
+        window.addEventListener("load", () => {
+            typeWriter();
+        });
+
+        /* ===================================================
+           CHANGE PAGE
+        =================================================== */
+        function showPage(page) {
+            screens.forEach(screen => screen.classList.remove("active"));
+            page.classList.add("active");
+            page.scrollTop = 0;
+        }
+
+        /* ===================================================
+           OPEN WEBSITE
+        =================================================== */
+        playBtn.addEventListener("click", () => {
+            music.play().catch(() => {});
+            showPage(pinPage);
+        });
+
+        /* ===================================================
+           FLOATING HEART
+        =================================================== */
+        const heartContainer = document.querySelector(".floating-hearts");
+
+        function createHeart() {
+            const heart = document.createElement("span");
+            heart.innerHTML = "🤍";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (14 + Math.random() * 18) + "px";
+            heart.style.animationDuration = (6 + Math.random() * 5) + "s";
+            heartContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 11000);
+        }
+
+        setInterval(createHeart, 450);
+
+        /* ===================================================
+           PIN LOGIC
+        =================================================== */
+        numbers.forEach(button => {
+            button.addEventListener("click", () => {
+                if (pin.length >= 4) return;
+                pin += button.innerText;
+                updateDots();
+                checkPin();
+            });
+        });
+
+        function updateDots() {
+            dots.forEach((dot, idx) => {
+                if (idx < pin.length) {
+                    dot.classList.add("active");
+                } else {
+                    dot.classList.remove("active");
+                }
+            });
+        }
+
+        clearBtn.addEventListener("click", () => {
+            pin = "";
+            updateDots();
+        });
+
+        function wrongPin() {
+            pinPage.classList.add("shake");
+            if (navigator.vibrate) {
+                navigator.vibrate(300);
+            }
+
+            Swal.fire({
+                icon: "error",
+                title: "PIN Salah!",
+                text: "Coba lagi ya 🤍",
+                confirmButtonColor: "#ff5ea8",
+                confirmButtonText: "OK"
+            }).then(() => {
+                pin = "";
+                updateDots();
+            });
+
+            setTimeout(() => {
+                pinPage.classList.remove("shake");
+            }, 500);
+        }
+
+        function checkPin() {
+            if (pin.length !== 4) return;
+            if (pin === correctPin) {
+                setTimeout(() => {
+                    showPage(memoriesPage);
+                }, 500);
+            } else {
+                wrongPin();
+            }
+        }
+
+        /* ===================================================
+           BIG MEMORIES PHOTO CAROUSEL
+        =================================================== */
+        const sliderTrack = document.getElementById("sliderTrack");
+        const sliderViewport = document.getElementById("sliderViewport");
+        const sliderDots = document.querySelectorAll("#sliderDots span");
+        const sliderCaption = document.getElementById("sliderCaption");
+        const totalSlides = sliderDots.length;
+        let currentSlide = 0;
+
+        const slideCaptions = [
+            "Every picture holds a little piece of happiness.",
+            "Every picture holds a little piece of happiness.",
+            "Every picture holds a little piece of happiness.",
+            "Every picture holds a little piece of happiness.",
+            "Every picture holds a little piece of happiness."
+        ];
+
+        function goToSlide(slideIndex) {
+            if (slideIndex < 0) slideIndex = totalSlides - 1;
+            if (slideIndex >= totalSlides) slideIndex = 0;
+            currentSlide = slideIndex;
+
+            sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            sliderDots.forEach((dot, idx) => {
+                dot.classList.toggle("active", idx === currentSlide);
+            });
+
+            sliderCaption.style.opacity = 0;
+            setTimeout(() => {
+                sliderCaption.textContent = slideCaptions[currentSlide];
+                sliderCaption.style.opacity = 1;
+            }, 150);
+        }
+
+        sliderDots.forEach(dot => {
+            dot.addEventListener("click", () => {
+                const idx = parseInt(dot.getAttribute("data-index"), 10);
+                goToSlide(idx);
+            });
+        });
+
+        sliderViewport.addEventListener("click", () => {
+            goToSlide(currentSlide + 1);
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        sliderViewport.addEventListener("touchstart", (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        sliderViewport.addEventListener("touchend", (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 40) {
+                if (diff > 0) {
+                    goToSlide(currentSlide + 1);
+                } else {
+                    goToSlide(currentSlide - 1);
+                }
+            }
+        }, { passive: true });
+
+        /* ===================================================
+           NAVIGATION: MEMORIES -> LETTER -> QUESTION
+        =================================================== */
+        toLetterBtn.addEventListener("click", () => {
+            showPage(letterPage);
+        });
+
+        nextBtn.addEventListener("click", () => {
+            showPage(questionPage);
+        });
+
+        /* ===================================================
+           NO BUTTON DODGE
+        =================================================== */
+        const positions = [
+            { top: "15%", left: "10%" },
+            { top: "15%", left: "65%" },
+            { top: "40%", left: "20%" },
+            { top: "40%", left: "65%" },
+            { top: "65%", left: "10%" },
+            { top: "65%", left: "65%" },
+            { top: "80%", left: "35%" },
+            { top: "25%", left: "40%" }
+        ];
+
+        let currentPos = -1;
+
+        function moveNoButton() {
+            noBtn.style.position = "fixed";
+            let next;
+            do {
+                next = Math.floor(Math.random() * positions.length);
+            } while (next === currentPos);
+
+            currentPos = next;
+            noBtn.style.top = positions[currentPos].top;
+            noBtn.style.left = positions[currentPos].left;
+        }
+
+        noBtn.addEventListener("mouseenter", moveNoButton);
+        noBtn.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        /* ===================================================
+           YES BUTTON & CONFETTI
+        =================================================== */
+        yesBtn.addEventListener("click", () => {
+            yesBtn.classList.add("bounce");
+            burstConfetti();
+
+            setTimeout(() => {
+                showPage(successPage);
+            }, 2200);
+        });
+
+        function burstConfetti() {
+            const rect = yesBtn.getBoundingClientRect();
+            const x = (rect.left + rect.width / 2) / window.innerWidth;
+            const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+            confetti({
+                particleCount: 150,
+                spread: 80,
+                startVelocity: 45,
+                origin: { x: x, y: y }
+            });
+        }
+
+        /* ===================================================
+           CONTINUE & SUBMIT
+        =================================================== */
+        continueBtn.addEventListener("click", () => {
+            showPage(datePage);
+        });
+
+        submitBtn.addEventListener("click", () => {
+            if (textarea.value.trim() === "") {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Oops...",
+                    text: "Jawab dulu yaa 🤍",
+                    confirmButtonColor: "#ff5ea8"
+                });
+                return;
+            }
+
+            Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                html: `Jawaban kamu sudah dikirim 🤍<br><br>Jangan lupa screenshot terus kirim ke Niel yaa.`,
+                confirmButtonColor: "#ff5ea8",
+                confirmButtonText: "Oke"
+            }).then(() => {
+                showPage(finishPage);
+            });
+        });
+
+        textarea.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && e.ctrlKey) {
+                submitBtn.click();
+            }
+        });
+
+        restartBtn.addEventListener("click", () => {
+            location.reload();
+        });
+
+        /* ===================================================
+           BUTTON RIPPLE & MUSIC SAFETY
+        =================================================== */
+        document.querySelectorAll("button").forEach(button => {
+            button.addEventListener("click", () => {
+                button.style.transform = "scale(.95)";
+                setTimeout(() => {
+                    button.style.transform = "";
+                }, 120);
+            });
+        });
+
+        music.volume = 0.8;
+
+        document.addEventListener("visibilitychange", () => {
+            if (!document.hidden) {
+                music.play().catch(() => {});
+            }
+        });
+
+        console.log("Website For Nadya 🤍");
+    </script>
+</body>
+</html>
